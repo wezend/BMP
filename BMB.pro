@@ -25,10 +25,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    model.cpp \
+    read.cpp \
+    controller.cpp \
+    bmp.cpp \
+    write.cpp \
+    blackwhite.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    model.h \
+    read.h \
+    controller.h \
+    bmp.h \
+    write.h \
+    blackwhite.h
 
 FORMS += \
         mainwindow.ui
