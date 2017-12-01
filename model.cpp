@@ -49,3 +49,13 @@ void Model::write()
     qDebug() <<"I write it!";
 
 }
+
+void Model::makeBlackWhite()
+{
+    blackWhiter.setBmp(&(this->bmp));
+
+    blackWhiter.blackWhiteBMP();
+
+    qDebug() <<"I blackWhite it!";
+
+}

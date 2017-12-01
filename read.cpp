@@ -51,8 +51,6 @@ void Read::bmpRead()
                 bmp->rgb[i][j].rgbGreen = getc(bmp->pFile);
                 bmp->rgb[i][j].rgbRed = getc(bmp->pFile);
             }
-            // пропускаем последний байт в строке
-//            getc(bmp->pFile);
         }
 
     fclose(bmp->pFile);

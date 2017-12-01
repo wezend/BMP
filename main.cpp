@@ -22,6 +22,11 @@ int main(int argc, char *argv[])
     controller.model.read();
 
 
+
+    //чёрнобелизируем
+    controller.model.makeBlackWhite();
+
+
     //а ещё было бы здорово запихать выбор директории записи
     //тоесть юзер выбирает что читать, и куда записать, а потом жмёт "чёрнобелизировать"
     controller.model.setBmp("D:\\test1.bmp");

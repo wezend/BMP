@@ -34,21 +34,12 @@ void Write::write()
     fwrite(&bmp->bmpInfoHeader.biClrImportant , 1, 4, bmp->pFile);
 
     //записываем матрицы
-    char zero=0;
-        for (int i = 0; i < bmp->bmpInfoHeader.biWidth; i++) {
-                for (int j = 0; j < bmp->bmpInfoHeader.biHeight; j++) {
-                    fwrite(&bmp->rgb[i][j].rgbBlue , 1, 1, bmp->pFile);
-                    fwrite(&bmp->rgb[i][j].rgbGreen , 1, 1, bmp->pFile);
-                    fwrite(&bmp->rgb[i][j].rgbRed , 1, 1, bmp->pFile);
-                }
+    for (int i = 0; i < bmp->bmpInfoHeader.biWidth; i++) {
+            for (int j = 0; j < bmp->bmpInfoHeader.biHeight; j++) {
+                fwrite(&bmp->rgb[i][j].rgbBlue , 1, 1, bmp->pFile);
+                fwrite(&bmp->rgb[i][j].rgbGreen , 1, 1, bmp->pFile);
+                fwrite(&bmp->rgb[i][j].rgbRed , 1, 1, bmp->pFile);
             }
-
-
-
-
-
-
-
-
+        }
 
 }
