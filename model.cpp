@@ -59,3 +59,17 @@ void Model::makeBlackWhite()
     qDebug() <<"I blackWhite it!";
 
 }
+
+void Model::blurBMP(int sigma)
+{
+    blurer.setBmp(&(this->bmp));
+
+    blurer.setG(sigma);
+
+    qDebug() <<"I redy to blur it!";
+
+    blurer.blur();
+
+    qDebug() <<"I blur it!";
+
+}

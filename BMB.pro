@@ -31,7 +31,8 @@ SOURCES += \
     controller.cpp \
     bmp.cpp \
     write.cpp \
-    blackwhite.cpp
+    blackwhite.cpp \
+    blur.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -40,7 +41,8 @@ HEADERS += \
     controller.h \
     bmp.h \
     write.h \
-    blackwhite.h
+    blackwhite.h \
+    blur.h
 
 FORMS += \
         mainwindow.ui
