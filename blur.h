@@ -13,13 +13,13 @@ public:
     void setBmp(BMP *value);
     void blur();
 
-    void setG(int value);
+    void setG(double value);
 
 private:
     BMP *bmp;
-    int G=0;
+    double G=0;
 
-    double gauss(int s);
+    double gauss(double s);
 };
 
 #endif // BLUR_H
