@@ -12,90 +12,133 @@ void Blur::setBmp(BMP *value)
 
 void Blur::blur()
 {
-    double rgbBig[bmp->bmpInfoHeader.biWidth+2][bmp->bmpInfoHeader.biHeight+2];
-//    double **rgbBig = new double*[bmp->bmpInfoHeader.biWidth+2];
-//    for (int i = 0; i < bmp->bmpInfoHeader.biWidth+2; i++) {
-//        rgbBig[i] = new double[bmp->bmpInfoHeader.biHeight+2];
-//    }
+    qDebug()<<bmp->bmpInfoHeader.biWidth;
 
 
+//    double rgbBig[bmp->bmpInfoHeader.biWidth+2][bmp->bmpInfoHeader.biHeight+2];
+    double **rgbBig = new double*[bmp->bmpInfoHeader.biWidth+2];
     for (int i = 0; i < bmp->bmpInfoHeader.biWidth+2; i++) {
-            for (int j = 0; j < bmp->bmpInfoHeader.biHeight+2; j++) {
+        rgbBig[i] = new double[bmp->bmpInfoHeader.biHeight+2];
+    }
+
+
+    for (int i=0; i<bmp->bmpInfoHeader.biWidth+2; i++) {
+            for (int j=0; j<bmp->bmpInfoHeader.biHeight+2; j++) {
                 rgbBig[i][j]=0;
             }
         }
 
-    for (int i = 1; i < bmp->bmpInfoHeader.biWidth+1; i++) {
-            for (int j = 1; j < bmp->bmpInfoHeader.biHeight+1; j++) {
+    for(int i=0;i< bmp->bmpInfoHeader.biWidth; i++){
+        for(int j=0; j < bmp->bmpInfoHeader.biHeight; j++){
+            rgbBig[i+1][j+1]=bmp->rgb[i][j].rgbRed;
 
-                if(i==1)
-                    rgbBig[i-1][j]=(double)bmp->rgb[i-1][j-1].rgbBlue;
-                if(i==bmp->bmpInfoHeader.biWidth)
-                    rgbBig[i+1][j]=(double)bmp->rgb[i-1][j-1].rgbBlue;
+            //края
+            if(i==0)
+                rgbBig[i][j+1]=bmp->rgb[i][j].rgbRed;
+            if(j==0)
+                rgbBig[i+1][j]=bmp->rgb[i][j].rgbRed;
+            if(i==bmp->bmpInfoHeader.biWidth-1)
+                rgbBig[i+2][j+1]=bmp->rgb[i][j].rgbRed;
+            if(j==bmp->bmpInfoHeader.biHeight-1)
+                rgbBig[i+1][j+2]=bmp->rgb[i][j].rgbRed;
 
-                if(j==1)
-                    rgbBig[i][j-1]=(double)bmp->rgb[i-1][j-1].rgbBlue;
-                if(j==bmp->bmpInfoHeader.biHeight)
-                    rgbBig[i][j+1]=(double)bmp->rgb[i-1][j-1].rgbBlue;
+            //углы
+            if(i==0 && j==0)
+                rgbBig[i][j]=bmp->rgb[i][j].rgbRed;
+            if(i==0 && j==bmp->bmpInfoHeader.biHeight-1)
+                rgbBig[i][j+2]=bmp->rgb[i][j].rgbRed;
+            if(i==bmp->bmpInfoHeader.biWidth-1 && j==0)
+                rgbBig[i+2][j]=bmp->rgb[i][j].rgbRed;
+            if(i==bmp->bmpInfoHeader.biWidth-1 && j==bmp->bmpInfoHeader.biHeight-1)
+                rgbBig[i+2][j+2]=bmp->rgb[i][j].rgbRed;
 
-                if(i==1 && j==1)
-                    rgbBig[i-1][j-1]=(double)bmp->rgb[i-1][j-1].rgbBlue;
-                if(i==bmp->bmpInfoHeader.biWidth && j==bmp->bmpInfoHeader.biHeight)
-                    rgbBig[i+1][j+1]=(double)bmp->rgb[i-1][j-1].rgbBlue;
-
-                if(i==1 && j==bmp->bmpInfoHeader.biHeight)
-                    rgbBig[i-1][j+1]=(double)bmp->rgb[i-1][j-1].rgbBlue;
-                if(i==bmp->bmpInfoHeader.biWidth && j==1)
-                    rgbBig[i+1][j-1]=(double)bmp->rgb[i-1][j-1].rgbBlue;
-
-
-                rgbBig[i][j]=(double)bmp->rgb[i-1][j-1].rgbBlue;
-
-            }
         }
+    }
+
+
+//    for (int i = 1; i < bmp->bmpInfoHeader.biWidth+1; i++) {
+//            for (int j = 1; j < bmp->bmpInfoHeader.biHeight+1; j++) {
+
+//                if(i==1)
+//                    rgbBig[i-1][j]=(double)bmp->rgb[i-1][j-1].rgbBlue;
+//                if(i==bmp->bmpInfoHeader.biWidth)
+//                    rgbBig[i+1][j]=(double)bmp->rgb[i-1][j-1].rgbBlue;
+
+//                if(j==1)
+//                    rgbBig[i][j-1]=(double)bmp->rgb[i-1][j-1].rgbBlue;
+//                if(j==bmp->bmpInfoHeader.biHeight)
+//                    rgbBig[i][j+1]=(double)bmp->rgb[i-1][j-1].rgbBlue;
+
+//                if(i==1 && j==1)
+//                    rgbBig[i-1][j-1]=(double)bmp->rgb[i-1][j-1].rgbBlue;
+//                if(i==bmp->bmpInfoHeader.biWidth && j==bmp->bmpInfoHeader.biHeight)
+//                    rgbBig[i+1][j+1]=(double)bmp->rgb[i-1][j-1].rgbBlue;
+
+//                if(i==1 && j==bmp->bmpInfoHeader.biHeight)
+//                    rgbBig[i-1][j+1]=(double)bmp->rgb[i-1][j-1].rgbBlue;
+//                if(i==bmp->bmpInfoHeader.biWidth && j==1)
+//                    rgbBig[i+1][j-1]=(double)bmp->rgb[i-1][j-1].rgbBlue;
+
+
+//                rgbBig[i][j]=(double)bmp->rgb[i-1][j-1].rgbBlue;
+
+//            }
+//        }
 
 //    qDebug() <<"I redy to blur it! - 3";
 
-    for (int i = 1; i < bmp->bmpInfoHeader.biWidth+1; i++){
-        double sum = 0;
-            for (int j = 1; j < bmp->bmpInfoHeader.biHeight+1; j++) {
+
+
+    for (int i = 0; i < bmp->bmpInfoHeader.biWidth; i++){
+            for (int j = 0; j < bmp->bmpInfoHeader.biHeight; j++) {
+
+                double sum=0;
 
                 double x[3][3];
-
-
-
-                sum=rgbBig[i-1][j-1]+rgbBig[i][j-1]+rgbBig[i+1][j-1]+
-                        rgbBig[i-1][j]+rgbBig[i][j]+rgbBig[i+1][j]+
-                        rgbBig[i-1][j+1]+rgbBig[i][j+1]+rgbBig[i+1][j+1];
-
-//                //нормируем
-                x[0][0]=rgbBig[i-1][j-1]/sum;
-                x[0][1]=rgbBig[i][j-1]/sum;
-                x[0][2]=rgbBig[i+1][j-1]/sum;
-
-                x[1][0]=rgbBig[i-1][j]/sum;
-                x[1][1]=rgbBig[i][j]/sum;
-                x[1][2]=rgbBig[i+1][j]/sum;
-
-                x[2][0]=rgbBig[i-1][j+1]/sum;
-                x[2][1]=rgbBig[i][j+1]/sum;
-                x[2][2]=rgbBig[i+1][j+1]/sum;
-
-
-
-
-
-//                qDebug() <<sum;
 
                 for(int k=0;k<3;k++)
                     for(int z=0;z<3;z++){
                         if(k==1 && z==1)
-                            x[k][z]*=gauss(0);
+                            x[k][z]=gauss(0);
                         else
-                            x[k][z]*=gauss(1);
+                            x[k][z]=gauss(1);
 
-                        sum+=x[k][z];
                     }
+
+                for(int k=0;k<3;k++)
+                    for(int z=0;z<3;z++)
+                        sum+=x[k][z];
+
+                for(int k=0;k<3;k++)
+                    for(int z=0;z<3;z++)
+                        x[k][z]/=sum;
+
+                x[0][0]*=rgbBig[i][j];
+                x[0][1]*=rgbBig[i+1][j];
+                x[0][2]*=rgbBig[i+2][j];
+
+                x[1][0]*=rgbBig[i][j+1];
+                x[1][1]*=rgbBig[i+1][j+1];
+                x[1][2]*=rgbBig[i+2][j+1];
+
+                x[2][0]*=rgbBig[i][j+2];
+                x[2][1]*=rgbBig[i+1][j+2];
+                x[2][2]*=rgbBig[i+2][j+2];
+
+
+
+
+                sum=0;
+                for(int k=0;k<3;k++)
+                    for(int z=0;z<3;z++)
+                        sum+=x[k][z];
+                //нормируем
+//                for(int k=0;k<3;k++)
+//                    for(int z=0;z<3;z++)
+//                        x[k][z]/=sum;
+
+
+
 
 
 
@@ -110,14 +153,18 @@ void Blur::blur()
 //                rgbBig[i-1][j+1]*=gauss(1);
 //                rgbBig[i][j+1]*=gauss(1);
 //                rgbBig[i+1][j+1]*=gauss(1);
+                int iSum=sum;
+//                qDebug() <<iSum;
 
-                rgbBig[i][j]*=sum;
+                bmp->rgb[i][j].rgbBlue=iSum;
+                bmp->rgb[i][j].rgbGreen=iSum;
+                bmp->rgb[i][j].rgbRed=iSum;
 
 //                rgbBig[i-1][j-1]+rgbBig[i][j-1]+rgbBig[i+1][j-1]+
 //                        rgbBig[i-1][j]+rgbBig[i][j]+rgbBig[i+1][j]+
 //                        rgbBig[i-1][j+1]+rgbBig[i][j+1]+rgbBig[i+1][j+1];
 
-//                qDebug() <<rgbBig[i][j];
+//                qDebug() <<(int)rgbBig[i][j];
 
 //                rgbBig[i][j]*=bmp->rgb[i-1][j-1].rgbBlue;
 
@@ -125,14 +172,14 @@ void Blur::blur()
             }
     }
 
-    for (int i = 0; i < bmp->bmpInfoHeader.biWidth; i++) {
-            for (int j = 0; j < bmp->bmpInfoHeader.biHeight; j++) {
+//    for (int i = 0; i < bmp->bmpInfoHeader.biWidth; i++) {
+//            for (int j = 0; j < bmp->bmpInfoHeader.biHeight; j++) {
 
-                bmp->rgb[i][j].rgbBlue=(int)rgbBig[i+1][j+1];
-                bmp->rgb[i][j].rgbGreen=(int)rgbBig[i+1][j+1];
-                bmp->rgb[i][j].rgbRed=(int)rgbBig[i+1][j+1];
-            }
-        }
+//                bmp->rgb[i][j].rgbBlue=(int)rgbBig[i+1][j+1];
+//                bmp->rgb[i][j].rgbGreen=(int)rgbBig[i+1][j+1];
+//                bmp->rgb[i][j].rgbRed=(int)rgbBig[i+1][j+1];
+//            }
+//        }
 
 
 }

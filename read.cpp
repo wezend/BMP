@@ -46,7 +46,7 @@ void Read::bmpRead()
 
     //заполняем матрицу структур
     for (int i = 0; i < bmp->bmpInfoHeader.biWidth; i++) {
-            for (int j = 0; j < bmp->bmpInfoHeader.biHeight; j++) {
+            for (int j = 0; j < bmp->bmpInfoHeader.biHeight ; j++) {
                 bmp->rgb[i][j].rgbBlue = getc(bmp->pFile);
                 bmp->rgb[i][j].rgbGreen = getc(bmp->pFile);
                 bmp->rgb[i][j].rgbRed = getc(bmp->pFile);
