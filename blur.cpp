@@ -12,24 +12,28 @@ void Blur::setBmp(BMP *value)
 
 void Blur::blur()
 {
-    qDebug()<<bmp->bmpInfoHeader.biWidth;
+//    qDebug()<<bmp->bmpInfoHeader.biWidth;
 
-
-//    double rgbBig[bmp->bmpInfoHeader.biWidth+2][bmp->bmpInfoHeader.biHeight+2];
     double **rgbBig = new double*[bmp->bmpInfoHeader.biWidth+2];
     for (int i = 0; i < bmp->bmpInfoHeader.biWidth+2; i++) {
         rgbBig[i] = new double[bmp->bmpInfoHeader.biHeight+2];
     }
 
+//    double **rgbBig =new double*[bmp->bmpInfoHeader.biHeight+2] ;
+//    for (int i = 0; i < bmp->bmpInfoHeader.biHeight+2; i++) {
+//        rgbBig[i] = new double[bmp->bmpInfoHeader.biWidth+2];
+//    }
 
-    for (int i=0; i<bmp->bmpInfoHeader.biWidth+2; i++) {
-            for (int j=0; j<bmp->bmpInfoHeader.biHeight+2; j++) {
+
+
+    for (int j=0; j<bmp->bmpInfoHeader.biWidth+2; j++) {
+            for (int i=0; i<bmp->bmpInfoHeader.biHeight+2; i++) {
                 rgbBig[i][j]=0;
             }
         }
 
-    for(int i=0;i< bmp->bmpInfoHeader.biWidth; i++){
-        for(int j=0; j < bmp->bmpInfoHeader.biHeight; j++){
+    for(int j=0;j< bmp->bmpInfoHeader.biWidth; j++){
+        for(int i=0; i < bmp->bmpInfoHeader.biHeight; i++){
             rgbBig[i+1][j+1]=bmp->rgb[i][j].rgbRed;
 
             //края
@@ -87,10 +91,16 @@ void Blur::blur()
 
 //    qDebug() <<"I redy to blur it! - 3";
 
+//    for(int i=0;i< bmp->bmpInfoHeader.biWidth; i++){
+//        for(int j=0; j < bmp->bmpInfoHeader.biHeight; j++){
+//            qDebug()<<rgbBig[i][j];
+//        }
+//    }
 
 
-    for (int i = 0; i < bmp->bmpInfoHeader.biWidth; i++){
-            for (int j = 0; j < bmp->bmpInfoHeader.biHeight; j++) {
+
+    for (int j = 0; j < bmp->bmpInfoHeader.biWidth; j++){
+            for (int i = 0; i < bmp->bmpInfoHeader.biHeight; i++) {
 
                 double sum=0;
 
@@ -114,15 +124,15 @@ void Blur::blur()
                         x[k][z]/=sum;
 
                 x[0][0]*=rgbBig[i][j];
-                x[0][1]*=rgbBig[i+1][j];
-                x[0][2]*=rgbBig[i+2][j];
+                x[0][1]*=rgbBig[i][j+1];
+                x[0][2]*=rgbBig[i][j+2];
 
-                x[1][0]*=rgbBig[i][j+1];
+                x[1][0]*=rgbBig[i+1][j];
                 x[1][1]*=rgbBig[i+1][j+1];
-                x[1][2]*=rgbBig[i+2][j+1];
+                x[1][2]*=rgbBig[i+1][j+2];
 
-                x[2][0]*=rgbBig[i][j+2];
-                x[2][1]*=rgbBig[i+1][j+2];
+                x[2][0]*=rgbBig[i+2][j];
+                x[2][1]*=rgbBig[i+2][j+1];
                 x[2][2]*=rgbBig[i+2][j+2];
 
 

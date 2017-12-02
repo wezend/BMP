@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     //а так надо через проводник и всё твакое(хз)
     //тоесть пользователь нажал кнопку, открылся проводник(в идеале)
     //выбрал, нажал "OK". сработала эта штука
-    controller.model.setBmp("D:\\test.bmp");
+    controller.model.setBmp("D:\\test7.bmp");
 
     //и сразу эта штука. если это не бмп или не то бмп, должна вылетить ошибка.
     //в идеале, если всё норм, то должно появиться слово "DONE" в кнопке где было написано "OK"
@@ -25,6 +25,7 @@ int main(int argc, char *argv[])
     //чёрнобелизируем
     controller.model.makeBlackWhite();
 
+    //блюрим
     controller.model.blurBMP(1);
 
 
