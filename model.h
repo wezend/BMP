@@ -20,7 +20,7 @@ public:
     void read();
     void write();
     void makeBlackWhite();
-    void blurBMP(int sigma);
+    void blurBMP(double sigma);
 
 private:
     BMP bmp;

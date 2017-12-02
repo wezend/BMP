@@ -20,20 +20,20 @@ void Blur::blur()
     }
 
 //    double **rgbBig =new double*[bmp->bmpInfoHeader.biHeight+2] ;
-//    for (int i = 0; i < bmp->bmpInfoHeader.biHeight+2; i++) {
+//    for (int i = 0; i < bmp->bmpInfoHeader.biWidth+2; i++) {
 //        rgbBig[i] = new double[bmp->bmpInfoHeader.biWidth+2];
 //    }
 
 
 
-    for (int j=0; j<bmp->bmpInfoHeader.biWidth+2; j++) {
-            for (int i=0; i<bmp->bmpInfoHeader.biHeight+2; i++) {
+    for (int i=0; i<bmp->bmpInfoHeader.biWidth+2; i++) {
+            for (int j=0; j<bmp->bmpInfoHeader.biHeight+2; j++) {
                 rgbBig[i][j]=0;
             }
         }
 
-    for(int j=0;j< bmp->bmpInfoHeader.biWidth; j++){
-        for(int i=0; i < bmp->bmpInfoHeader.biHeight; i++){
+    for(int i=0;i< bmp->bmpInfoHeader.biWidth; i++){
+        for(int j=0; j < bmp->bmpInfoHeader.biHeight; j++){
             rgbBig[i+1][j+1]=bmp->rgb[i][j].rgbRed;
 
             //края
@@ -93,14 +93,14 @@ void Blur::blur()
 
 //    for(int i=0;i< bmp->bmpInfoHeader.biWidth; i++){
 //        for(int j=0; j < bmp->bmpInfoHeader.biHeight; j++){
-//            qDebug()<<rgbBig[i][j];
+//            qDebug()<<rgbBig[][];
 //        }
 //    }
 
 
 
-    for (int j = 0; j < bmp->bmpInfoHeader.biWidth; j++){
-            for (int i = 0; i < bmp->bmpInfoHeader.biHeight; i++) {
+    for (int i = 0; i < bmp->bmpInfoHeader.biWidth; i++){
+            for (int j = 0; j < bmp->bmpInfoHeader.biHeight; j++) {
 
                 double sum=0;
 

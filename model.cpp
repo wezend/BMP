@@ -60,7 +60,7 @@ void Model::makeBlackWhite()
 
 }
 
-void Model::blurBMP(int sigma)
+void Model::blurBMP(double sigma)
 {
     blurer.setBmp(&(this->bmp));
 
