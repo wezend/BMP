@@ -66,10 +66,18 @@ void Model::blurBMP(double sigma)
 
     blurer.setG(sigma);
 
-    qDebug() <<"I redy to blur it!";
-
     blurer.blur();
 
     qDebug() <<"I blur it!";
+
+}
+
+void Model::gradBMP()
+{
+    gradienter.setBmp(&(this->bmp));
+
+    gradienter.gradient();
+
+    qDebug() <<"I gradient it!";
 
 }

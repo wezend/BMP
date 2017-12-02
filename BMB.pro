@@ -32,7 +32,8 @@ SOURCES += \
     bmp.cpp \
     write.cpp \
     blackwhite.cpp \
-    blur.cpp
+    blur.cpp \
+    gradient.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -42,7 +43,8 @@ HEADERS += \
     bmp.h \
     write.h \
     blackwhite.h \
-    blur.h
+    blur.h \
+    gradient.h
 
 FORMS += \
         mainwindow.ui

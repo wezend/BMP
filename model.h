@@ -6,6 +6,7 @@
 #include "write.h"
 #include "blackwhite.h"
 #include "blur.h"
+#include "gradient.h"
 
 #include "qdebug.h"
 
@@ -21,6 +22,7 @@ public:
     void write();
     void makeBlackWhite();
     void blurBMP(double sigma);
+    void gradBMP();
 
 private:
     BMP bmp;
@@ -28,6 +30,7 @@ private:
     Write writer;
     BlackWhite blackWhiter;
     Blur blurer;
+    Gradient gradienter;
 
 };
 
