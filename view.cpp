@@ -60,7 +60,14 @@ void view::displayMainMenu()
 void view::action(){
     QString sPath= dirmodel->fileInfo(treeview->currentIndex()).absoluteFilePath();
     sPath.replace("/","\\");
-    char* b = sPath.data();
-    qDebug() << sPath<<endl<<b;
-    //controller.model.setBmp("D:\\test9.bmp");
+
+//    std::string str = sPath.toStdString();
+//    const char * b = str.c_str();
+
+    QByteArray ba = sPath.toLatin1();
+    char * b= ba.data();
+
+    //тут перевод и кустринк в чар
+    qDebug() << sPath << b;
+    //controller.model.setBmp(/*тут чаровская строка*/);
 }
