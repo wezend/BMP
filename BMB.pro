@@ -25,7 +25,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp \
     model.cpp \
     read.cpp \
     controller.cpp \
@@ -33,10 +32,11 @@ SOURCES += \
     write.cpp \
     blackwhite.cpp \
     blur.cpp \
-    gradient.cpp
+    gradient.cpp \
+    view.cpp \
+    button.cpp
 
 HEADERS += \
-        mainwindow.h \
     model.h \
     read.h \
     controller.h \
@@ -44,7 +44,8 @@ HEADERS += \
     write.h \
     blackwhite.h \
     blur.h \
-    gradient.h
+    gradient.h \
+    view.h \
+    button.h
 
-FORMS += \
-        mainwindow.ui
+FORMS +=
