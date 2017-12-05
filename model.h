@@ -7,6 +7,8 @@
 #include "blackwhite.h"
 #include "blur.h"
 #include "gradient.h"
+#include "notmaximums.h"
+#include "filter.h"
 
 #include "qdebug.h"
 
@@ -23,6 +25,8 @@ public:
     void makeBlackWhite();
     void blurBMP(double sigma);
     void gradBMP();
+    void notMaximumsBMP();
+    void filterBMP(int min, int max);
 
 private:
     BMP bmp;
@@ -31,6 +35,8 @@ private:
     BlackWhite blackWhiter;
     Blur blurer;
     Gradient gradienter;
+    NotMaximums notMaximumer;
+    Filter filterer;
 
 };
 

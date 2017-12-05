@@ -13,113 +13,116 @@ void Gradient::setBmp(BMP *value)
 void Gradient::gradient()
 {
 
-    double **rgbGrad = new double*[bmp->bmpInfoHeader.biWidth];
-    for (int i = 0; i < bmp->bmpInfoHeader.biWidth; i++) {
-        rgbGrad[i] = new double[bmp->bmpInfoHeader.biHeight];
+    int robinson[8][3][3]={
+        {
+            {-1, 0, 1},
+            {-2, 0, 2},
+            {-1, 0, 1}
+        },
+        {
+            { 0, 1, 2},
+            {-1, 0, 1},
+            {-2,-1, 0}
+        },
+        {
+            { 1, 2, 1},
+            { 0, 0, 0},
+            {-1,-2,-1}
+        },
+        {
+            { 2, 1, 0},
+            { 1, 0,-1},
+            { 0,-1,-2}
+        },
+        {
+            { 1, 0,-1},
+            { 2, 0,-2},
+            { 1, 0,-1}
+        },
+        {
+            { 0,-1,-2},
+            { 1, 0,-1},
+            { 2, 1, 0}
+        },
+        {
+            {-1,-2,-1},
+            { 0, 0, 0},
+            { 1, 2, 1}
+        },
+        {
+            {-2,-1, 0},
+            {-1, 0, 1},
+            { 0, 1, 2}
+        }
+    };
+
+    double **rgbGrad = new double*[bmp->bmpInfoHeader.biWidth+2];
+    for (int i = 0; i < bmp->bmpInfoHeader.biWidth+2; i++) {
+        rgbGrad[i] = new double[bmp->bmpInfoHeader.biHeight+2];
     }
 
 
     for (int i=0; i<bmp->bmpInfoHeader.biWidth; i++) {
             for (int j=0; j<bmp->bmpInfoHeader.biHeight; j++) {
-                rgbGrad[i][j]=bmp->rgb[i][j].rgbBlue;
+                rgbGrad[i+1][j+1]=bmp->rgb[i][j].rgbBlue;
+
+                //края
+                if(i==0)
+                    rgbGrad[i][j+1]=bmp->rgb[i][j].rgbRed;
+                if(j==0)
+                    rgbGrad[i+1][j]=bmp->rgb[i][j].rgbRed;
+                if(i==bmp->bmpInfoHeader.biWidth-1)
+                    rgbGrad[i+2][j+1]=bmp->rgb[i][j].rgbRed;
+                if(j==bmp->bmpInfoHeader.biHeight-1)
+                    rgbGrad[i+1][j+2]=bmp->rgb[i][j].rgbRed;
+
+                //углы
+                if(i==0 && j==0)
+                    rgbGrad[i][j]=bmp->rgb[i][j].rgbRed;
+                if(i==0 && j==bmp->bmpInfoHeader.biHeight-1)
+                    rgbGrad[i][j+2]=bmp->rgb[i][j].rgbRed;
+                if(i==bmp->bmpInfoHeader.biWidth-1 && j==0)
+                    rgbGrad[i+2][j]=bmp->rgb[i][j].rgbRed;
+                if(i==bmp->bmpInfoHeader.biWidth-1 && j==bmp->bmpInfoHeader.biHeight-1)
+                    rgbGrad[i+2][j+2]=bmp->rgb[i][j].rgbRed;
             }
         }
 
-    int Gx[3][3]={{1,0,-1},{2,0,-2},{1,0,-1}};
-    int Gy[3][3]={{1,2,1},{0,0,0},{-1,-2,-1}};
-
-    for(int i=1;i<bmp->bmpInfoHeader.biWidth-1;i++){
-        for(int j=1;j<bmp->bmpInfoHeader.biHeight-1;j++){
-            double Ax[3][3]={{rgbGrad[i-1][j-1],rgbGrad[i-1][j],rgbGrad[i-1][j+1]},
-                             {rgbGrad[i][j-1],rgbGrad[i][j],rgbGrad[i][j+1]},
-                             {rgbGrad[i+1][j-1],rgbGrad[i+1][j],rgbGrad[i+1][j+1]}};
-            double Ay[3][3]={{rgbGrad[i-1][j-1],rgbGrad[i-1][j],rgbGrad[i-1][j+1]},
-                             {rgbGrad[i][j-1],rgbGrad[i][j],rgbGrad[i][j+1]},
-                             {rgbGrad[i+1][j-1],rgbGrad[i+1][j],rgbGrad[i+1][j+1]}};;
-
-//            double G[3][3];
 
 
-            double res1[3][3];
+    for (int i=0; i<bmp->bmpInfoHeader.biWidth; i++) {
+        for (int j=0; j<bmp->bmpInfoHeader.biHeight; j++){
+            double A[3][3]={
+                {rgbGrad[i][j],rgbGrad[i][j+1],rgbGrad[i][j+2]},
+                {rgbGrad[i+1][j],rgbGrad[i+1][j+1],rgbGrad[i+1][j+2]},
+                {rgbGrad[i+2][j],rgbGrad[i+2][j+1],rgbGrad[i+2][j+2]}
+            };
 
-            for (int k = 0; k < 3; k++){
-                   for (int z = 0; z < 3; z++){
-                      res1[k][z] = 0.0;
-                       for (int t = 0; t < 3; t++){
-                           res1[k][z] += Ax[k][t] * Gx[t][z];
-                       }
-                   }
-               }
+            double B[3][3];
+            int sum=0;
 
-
-            double res2[3][3];
-
-
-            for (int k = 0; k < 3; k++){
-                   for (int z = 0; z < 3; z++){
-                      res2[k][z] = 0.0;
-                       for (int t = 0; t < 3; t++){
-                           res2[k][z] += Ay[k][t] * Gy[t][z];
-                       }
-                   }
-               }
-
-            double r2=0;
-            double r1=0;
-
-            for (int k = 0; k < 3; k++){
-                   for (int z = 0; z < 3; z++){
-                      r1+=res1[k][z];
-                      r2+=res2[k][z];
-                   }
-               }
-
-
-
-//            for(int t=0;t<3;t++)
-//                for(int z=0;z<3;z++){
-//                    Ax*Gx
-//                    Ax[t][z]*=Gx[t][z];
-//                    Ax^2
-//                    Ax[t][z]*=Ax[t][z];
-//                    Ay[t][z]*=Gy[t][z];
-//                    Ay[t][z]*=Ay[t][z];
-
-//                    G[t][z]=sqrt(res1[t][z]+res2[t][z]);
-            double G=sqrt(pow(r1,2)+pow(r2,2));
-//                }
-//                qDebug() <<G;
-//            __int16 G=Gd;
-
-                for(int k=i-1;k<3;k++)
-                    for(int z=j-1;z<3;z++){
-                        bmp->rgb[i+k][j+z].rgbBlue=G/*[k][z]*/;
-                        bmp->rgb[i+k][j+z].rgbGreen=G/*[k][z]*/;
-                        bmp->rgb[i+k][j+z].rgbRed=G/*[k][z]*/;
+            for(int k=0;k<8;k++){
+                int tmpSum=0;
+                for(int z=0;z<3;z++){
+                    for(int y=0;y<3;y++){
+                        B[z][y]=A[z][y] * robinson[k][z][y];
+                        tmpSum+=B[z][y];
                     }
+                }
+                if(sum<tmpSum){
+                    bmp->rgb[i][j].gradVector=k;
+                    bmp->rgb[i][j].rgbBlue=tmpSum;
+                    bmp->rgb[i][j].rgbGreen=tmpSum;
+                    bmp->rgb[i][j].rgbRed=tmpSum;
+                    sum=tmpSum;
 
-
+                }
             }
 
 
         }
+    }
 
 }
 
-double *Gradient::matrixMultiply(double *A, double *G,double *Result)
-{
-
-//    for (int i = 0; i < 3; i++){             //умножение матриц А и (В - Е)
-//           for (int j = 0; j < 3; j++){
-//              Result[i][j] = 0.0;
-//               for (int t = 0; t < 3; t++){
-//                   Result[i][j] += (A[i][t]) * (G[t][j]);
-//               }
-//           }
-//       }
-
-//    return Result;
-
-
-}
 

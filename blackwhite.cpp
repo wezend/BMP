@@ -26,16 +26,6 @@ void BlackWhite::blackWhiteBMP()
             }
         }
 
-//    for(int counter=0; counter < rgbValues.Length; counter += 3)
-
-//    {
-//    int x = (int)(0.3*((int)rgbValues[counter]) + 0.59*((int)rgbValues[counter+1]) + 0.11*((int)rgbValues[counter+2]));
-
-//    rgbValues[counter] = rgbValues[counter+1] = rgbValues[counter+2] = (byte)x;
-
-//    }
-
-
 }
 
 void BlackWhite::setBmp(BMP *value)

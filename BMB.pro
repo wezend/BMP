@@ -34,7 +34,10 @@ SOURCES += \
     blur.cpp \
     gradient.cpp \
     view.cpp \
-    button.cpp
+    button.cpp \
+    notmaximums.cpp \
+    claster.cpp \
+    filter.cpp
 
 HEADERS += \
     model.h \
@@ -46,6 +49,9 @@ HEADERS += \
     blur.h \
     gradient.h \
     view.h \
-    button.h
+    button.h \
+    notmaximums.h \
+    claster.h \
+    filter.h
 
 FORMS +=

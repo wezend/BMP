@@ -81,3 +81,24 @@ void Model::gradBMP()
     qDebug() <<"I gradient it!";
 
 }
+
+void Model::notMaximumsBMP()
+{
+    notMaximumer.setBmp(&(this->bmp));
+
+    notMaximumer.notMaximums();
+
+    qDebug() <<"I not maximum it!";
+
+}
+
+void Model::filterBMP(int min, int max)
+{
+   filterer.setBmp(&(this->bmp));
+
+   for(int i=0;i<3;i++)
+    filterer.filter(min, max);
+
+   qDebug() <<"I not filter it!";
+}
+

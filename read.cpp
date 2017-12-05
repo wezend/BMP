@@ -57,15 +57,15 @@ void Read::bmpRead()
 
 
 //    вывод в консоль матриц
-    for (int i = 0; i < bmp->bmpInfoHeader.biWidth; i++) {
-            for (int j = 0; j < bmp->bmpInfoHeader.biHeight; j++) {
+//    for (int i = 0; i < bmp->bmpInfoHeader.biWidth; i++) {
+//            for (int j = 0; j < bmp->bmpInfoHeader.biHeight; j++) {
 //                printf("%d %d %d\n", bmp->rgb[i][j].rgbRed, bmp->rgb[i][j].rgbGreen, bmp->rgb[i][j].rgbBlue);
-            }
+//            }
 //            printf("\n");
-        }
+//        }
 
 
-//    qDebug() <<hex<<;
+
 
 }
 
@@ -106,38 +106,3 @@ static int read_s32(FILE *fp)
 
     return ((int)(((((b3 << 8) | b2) << 8) | b1) << 8) | b0);
 }
-
-
-
-/*
-static unsigned short read_u8(FILE *fp)
-{
-    unsigned char b0;
-
-    b0 = getc(fp);
-
-    return b0;
-}
-
-static unsigned short read_u16(FILE *fp)
-{
-    unsigned char b0, b1;
-
-    b1 = getc(fp);
-    b0 = getc(fp);
-
-
-    return ( (b1 << 8)|b0);
-}
-
-static unsigned int read_u32(FILE *fp)
-{
-    unsigned char b0, b1, b2, b3;
-
-    b0 = getc(fp);
-    b1 = getc(fp);
-    b2 = getc(fp);
-    b3 = getc(fp);
-
-    return ((((((b3 << 8) | b2) << 8) | b1) << 8) | b0);
-*/

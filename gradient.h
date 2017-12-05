@@ -13,7 +13,7 @@ public:
 
 private:
     BMP *bmp;
-    double *matrixMultiply(double *A, double *G, double *Result);
+
 };
 
 #endif // GRADIENT_H
