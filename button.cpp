@@ -4,7 +4,7 @@
 
 button::button(QString name, QGraphicsItem *parent): QGraphicsRectItem(parent){
     // draw the rect
-    setRect(0,0,200,50);
+    setRect(0,0,100,50);
     QBrush brush;
     brush.setStyle(Qt::SolidPattern);
     brush.setColor(Qt::darkCyan);

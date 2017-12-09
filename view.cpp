@@ -12,29 +12,29 @@ view::view(QWidget *parent)
 {
     // создаём scene
     scene = new QGraphicsScene(this);
-    scene->setSceneRect(0,0,1600,1600);
+    scene->setSceneRect(0,0,800,600);
 
     // установить scene
     setScene(scene);
 
-    setFixedSize(1600,1600);
+    setFixedSize(800,600);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     lineEditBl = new QLineEdit(this);
-    lineEditBl->setGeometry(10,700,200,40);
+    lineEditBl->setGeometry(10,500,100,40);
     lineEditBl->setPlaceholderText("Set Blur");
 
     lineEditTmin = new QLineEdit(this);
-    lineEditTmin->setGeometry(220,700,200,40);
+    lineEditTmin->setGeometry(120,500,100,40);
     lineEditTmin->setPlaceholderText("Set Tmin");
 
     lineEditTmax = new QLineEdit(this);
-    lineEditTmax->setGeometry(430,700,200,40);
+    lineEditTmax->setGeometry(230,500,100,40);
     lineEditTmax->setPlaceholderText("Set Tmax");
 
     lineEditName = new QLineEdit(this);
-    lineEditName->setGeometry(640,700,200,40);
+    lineEditName->setGeometry(340,500,100,40);
     lineEditName->setPlaceholderText("Set Name of picture");
 
     QString sPath = "";
@@ -42,36 +42,36 @@ view::view(QWidget *parent)
     dirmodel->setRootPath(sPath);
     treeview = new QTreeView(this);
     treeview->setModel(dirmodel);
-    treeview->setFixedWidth(500);
-    treeview->setFixedHeight(500);
+    treeview->setFixedWidth(400);
+    treeview->setFixedHeight(400);
 }
 void view::displayMainMenu()
 {
 
     button* OpenButton = new button(QString("Open"));
     int bxPos = 10;
-    int byPos = 610;
+    int byPos = 410;
     OpenButton->setPos(bxPos,byPos);
     connect(OpenButton,SIGNAL(clicked()),this,SLOT(open()));
     scene->addItem(OpenButton);
 
     button* SaveButton = new button(QString("Save"));
-    int qxPos = SaveButton->boundingRect().width()/2 + 120;
-    int qyPos = 610;
+    int qxPos = SaveButton->boundingRect().width()/2 + 70;
+    int qyPos = 410;
     SaveButton->setPos(qxPos,qyPos);
     connect(SaveButton,SIGNAL(clicked()),this,SLOT(write()));
     scene->addItem(SaveButton);
 
     button* HandleButton = new button(QString("Handle"));
-    int hxPos = HandleButton->boundingRect().width()/2 + 330;
-    int hyPos = 610;
+    int hxPos = HandleButton->boundingRect().width()/2 + 180;
+    int hyPos = 410;
     HandleButton->setPos(hxPos,hyPos);
     connect(HandleButton,SIGNAL(clicked()),this,SLOT(handle()));
     scene->addItem(HandleButton);
 
     button* ClastButton = new button(QString("Clasterization"));
-    int cxPos = ClastButton->boundingRect().width()/2 + 540;
-    int cyPos = 610;
+    int cxPos = ClastButton->boundingRect().width()/2 + 290;
+    int cyPos = 410;
     ClastButton->setPos(cxPos,cyPos);
     connect(ClastButton,SIGNAL(clicked()),this,SLOT(clasterization()));
     scene->addItem(ClastButton);
