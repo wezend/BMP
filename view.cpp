@@ -1,73 +1,136 @@
 #include "view.h"
 #include <QGraphicsTextItem>
-#include <windows.h>
+//#include <windows.h>
 #include <button.h>
 #include <QDirModel>
 #include <QTreeView>
-//#include <controller.h>
 #include <qdebug.h>
-
+#include <QMessageBox>
+#include <QLineEdit>
 
 view::view(QWidget *parent)
 {
     // создаём scene
     scene = new QGraphicsScene(this);
-    scene->setSceneRect(0,0,GetSystemMetrics( SM_CXSCREEN ),GetSystemMetrics( SM_CYSCREEN));
+    scene->setSceneRect(0,0,1600,1600);
 
     // установить scene
     setScene(scene);
 
-    setFixedSize(GetSystemMetrics( SM_CXSCREEN ),GetSystemMetrics( SM_CYSCREEN));
+    setFixedSize(1600,1600);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    QString sPath = "D:/";
+
+    lineEditBl = new QLineEdit(this);
+    lineEditBl->setGeometry(10,700,200,40);
+    lineEditBl->setPlaceholderText("Set Blur");
+
+    lineEditTmin = new QLineEdit(this);
+    lineEditTmin->setGeometry(220,700,200,40);
+    lineEditTmin->setPlaceholderText("Set Blur");
+
+    lineEditTmax = new QLineEdit(this);
+    lineEditTmax->setGeometry(430,700,200,40);
+    lineEditTmax->setPlaceholderText("Set Blur");
+
+    QString sPath = "";
     dirmodel = new QFileSystemModel(this);
     dirmodel->setRootPath(sPath);
     treeview = new QTreeView(this);
     treeview->setModel(dirmodel);
-    treeview->setFixedWidth(600);
-    treeview->setFixedHeight(600);
+    treeview->setFixedWidth(500);
+    treeview->setFixedHeight(500);
 }
 void view::displayMainMenu()
 {
 
+    button* OpenButton = new button(QString("Open"));
+    int bxPos = 10;
+    int byPos = 610;
+    OpenButton->setPos(bxPos,byPos);
+    connect(OpenButton,SIGNAL(clicked()),this,SLOT(open()));
+    scene->addItem(OpenButton);
 
-    // create the title text
-    QGraphicsTextItem* titleText = new QGraphicsTextItem(QString("FUCK FOCC"));
+    button* SaveButton = new button(QString("Save"));
+    int qxPos = SaveButton->boundingRect().width()/2 + 120;
+    int qyPos = 610;
+    SaveButton->setPos(qxPos,qyPos);
+    connect(SaveButton,SIGNAL(clicked()),this,SLOT(write()));
+    scene->addItem(SaveButton);
+
+    button* HandleButton = new button(QString("Handle"));
+    int hxPos = HandleButton->boundingRect().width()/2 + 330;
+    int hyPos = 610;
+    HandleButton->setPos(hxPos,hyPos);
+    connect(HandleButton,SIGNAL(clicked()),this,SLOT(handle()));
+    scene->addItem(HandleButton);
+
+    button* ClastButton = new button(QString("Clasterization"));
+    int cxPos = ClastButton->boundingRect().width()/2 + 540;
+    int cyPos = 610;
+    ClastButton->setPos(cxPos,cyPos);
+    connect(ClastButton,SIGNAL(clicked()),this,SLOT(clasterization()));
+    scene->addItem(ClastButton);
+
+}
+
+void view::displayWindow(QString str)
+{
+    titleText = new QGraphicsTextItem(str);
     QFont titleFont("comic sans",50);
     titleText->setFont(titleFont);
     int txPos = this->width()/2 - titleText->boundingRect().width()/2;
-    int tyPos = 150;
+    int tyPos = 100;
     titleText->setPos(txPos,tyPos);
     scene->addItem(titleText);
-
-    // create the play button
-    button* playButton = new button(QString("Open"));
-    int bxPos = 0;
-    int byPos = 600;
-    playButton->setPos(bxPos,byPos);
-    connect(playButton,SIGNAL(clicked()),this,SLOT(action()));
-    scene->addItem(playButton);
-
-        // create the quit button
-        button* quitButton = new button(QString("Save"));
-        int qxPos = quitButton->boundingRect().width()/2 + 150;
-        int qyPos = 600;
-        quitButton->setPos(qxPos,qyPos);
-        //connect(quitButton,SIGNAL(clicked()),this,SLOT(close()));
-        scene->addItem(quitButton);
 }
-void view::action(){
+
+void view::open(){
     QString sPath= dirmodel->fileInfo(treeview->currentIndex()).absoluteFilePath();
     sPath.replace("/","\\");
+    this->controler.model.setBmp(sPath);
+    this->controler.model.read();
+    if(this->controler.model.reader.error!=0)
+        QMessageBox::information(this,"Title","Error");
+    else
+    QMessageBox::information(this,"Title","Opened");
+}
 
-//    std::string str = sPath.toStdString();
-//    const char * b = str.c_str();
+void view::write(){
+    QString sPath= dirmodel->fileInfo(treeview->currentIndex()).absoluteFilePath();
+    sPath.replace("/","\\");
+    QString Name = "1.bmp";
+    sPath+=Name;
+    this->controler.model.setBmp(sPath);
+    this->controler.model.write();
+    //scene->removeItem(titleText);
+    //displayWindow("Saved");
+    QMessageBox::information(this,"Title","Saved");
+}
 
-    QByteArray ba = sPath.toLatin1();
-    char * b= ba.data();
+void view::handle()
+{
+    if(!lineEditBl->text().toDouble())
+        bl=lineEditBl->text().toDouble();
+    if(!lineEditTmin->text().toInt())
+        bl=lineEditTmin->text().toInt();
+    if(!lineEditTmax->text().toInt())
+        bl=lineEditTmax->text().toInt();
+    this->controler.model.makeBlackWhite();
+    this->controler.model.blurBMP(bl);
+    this->controler.model.gradBMP();
+    this->controler.model.notMaximumsBMP();
+    this->controler.model.filterBMP(Tmin, Tmax);
+    //scene->removeItem(titleText);
+    QMessageBox::information(this,"Title","Handeled");
+    qDebug()<<lineEditBl->text().toDouble();
 
-    //тут перевод и кустринк в чар
-    qDebug() << sPath << b;
-    //controller.model.setBmp(/*тут чаровская строка*/);
+}
+
+void view::clasterization()
+{
+    //this->controler.model.
+    //scene->removeItem(titleText);
+    QMessageBox::information(this,"Title","clasturized");
+
 }

@@ -11,15 +11,14 @@ BMP Model::getBmp() const
     return bmp;
 }
 
-void Model::setBmp(const char *pFile)
+void Model::setBmp(QString a)
 {
     //выбор считываемого бмп файла
     if(bmp.bmpFileHeadr.bfType==0){
-        bmp.pFile=fopen(pFile,"rb");
+        bmp.pFile=fopen(a.toLatin1(),"rb");
     }else {
-       bmp.pFile=fopen(pFile,"wb");
+       bmp.pFile=fopen(a.toLatin1(),"wb");
     }
-
 
 }
 

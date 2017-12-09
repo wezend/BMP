@@ -19,7 +19,7 @@ class Model
 public:
     Model();
     BMP getBmp() const;
-    void setBmp(const char *pFile);
+    void setBmp(QString a);
     void read();
     void write();
     void makeBlackWhite();
@@ -27,10 +27,10 @@ public:
     void gradBMP();
     void notMaximumsBMP();
     void filterBMP(int min, int max);
-
-private:
     BMP bmp;
     Read reader;
+private:
+
     Write writer;
     BlackWhite blackWhiter;
     Blur blurer;
