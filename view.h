@@ -27,6 +27,7 @@ private:
     QLineEdit * lineEditBl;
     QLineEdit * lineEditTmin;
     QLineEdit * lineEditTmax;
+    QLineEdit *lineEditName;
     double bl;
     int Tmin;
     int Tmax;

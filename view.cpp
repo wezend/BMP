@@ -27,11 +27,15 @@ view::view(QWidget *parent)
 
     lineEditTmin = new QLineEdit(this);
     lineEditTmin->setGeometry(220,700,200,40);
-    lineEditTmin->setPlaceholderText("Set Blur");
+    lineEditTmin->setPlaceholderText("Set Tmin");
 
     lineEditTmax = new QLineEdit(this);
     lineEditTmax->setGeometry(430,700,200,40);
-    lineEditTmax->setPlaceholderText("Set Blur");
+    lineEditTmax->setPlaceholderText("Set Tmax");
+
+    lineEditName = new QLineEdit(this);
+    lineEditName->setGeometry(640,700,200,40);
+    lineEditName->setPlaceholderText("Set Name of picture");
 
     QString sPath = "";
     dirmodel = new QFileSystemModel(this);
@@ -99,12 +103,11 @@ void view::open(){
 void view::write(){
     QString sPath= dirmodel->fileInfo(treeview->currentIndex()).absoluteFilePath();
     sPath.replace("/","\\");
-    QString Name = "1.bmp";
+    QString Name = ".bmp";
+    sPath+=lineEditName->text();
     sPath+=Name;
     this->controler.model.setBmp(sPath);
     this->controler.model.write();
-    //scene->removeItem(titleText);
-    //displayWindow("Saved");
     QMessageBox::information(this,"Title","Saved");
 }
 
@@ -112,18 +115,15 @@ void view::handle()
 {
     if(!lineEditBl->text().toDouble())
         bl=lineEditBl->text().toDouble();
-    if(!lineEditTmin->text().toInt())
-        bl=lineEditTmin->text().toInt();
+    Tmin=lineEditTmin->text().toInt();
     if(!lineEditTmax->text().toInt())
-        bl=lineEditTmax->text().toInt();
+        Tmax=lineEditTmax->text().toInt();
     this->controler.model.makeBlackWhite();
     this->controler.model.blurBMP(bl);
     this->controler.model.gradBMP();
     this->controler.model.notMaximumsBMP();
     this->controler.model.filterBMP(Tmin, Tmax);
-    //scene->removeItem(titleText);
     QMessageBox::information(this,"Title","Handeled");
-    qDebug()<<lineEditBl->text().toDouble();
 
 }
 
