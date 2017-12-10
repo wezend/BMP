@@ -113,10 +113,10 @@ void view::write(){
 
 void view::handle()
 {
-    if(!lineEditBl->text().toDouble())
+    if(lineEditBl->text().toDouble())
         bl=lineEditBl->text().toDouble();
     Tmin=lineEditTmin->text().toInt();
-    if(!lineEditTmax->text().toInt())
+    if(lineEditTmax->text().toInt())
         Tmax=lineEditTmax->text().toInt();
     this->controler.model.makeBlackWhite();
     this->controler.model.blurBMP(bl);
