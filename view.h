@@ -28,9 +28,9 @@ private:
     QLineEdit * lineEditTmin;
     QLineEdit * lineEditTmax;
     QLineEdit *lineEditName;
-    double bl;
-    int Tmin;
-    int Tmax;
+    double bl=1.0;
+    int Tmin=2;
+    int Tmax=90;
 
 public slots:
     void open();
