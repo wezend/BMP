@@ -37,7 +37,8 @@ SOURCES += \
     button.cpp \
     notmaximums.cpp \
     claster.cpp \
-    filter.cpp
+    filter.cpp \
+    clasterisation.cpp
 
 HEADERS += \
     model.h \
@@ -52,6 +53,31 @@ HEADERS += \
     button.h \
     notmaximums.h \
     claster.h \
-    filter.h
+    filter.h \
+    clasterisation.h
 
 FORMS +=
+
+INCLUDEPATH += D:\opencv\build\include
+
+LIBS += D:\opencv\build\bin\libopencv_core320.dll
+LIBS += D:\opencv\build\bin\libopencv_highgui320.dll
+LIBS += D:\opencv\build\bin\libopencv_imgcodecs320.dll
+LIBS += D:\opencv\build\bin\libopencv_imgproc320.dll
+LIBS += D:\opencv\build\bin\libopencv_features2d320.dll
+LIBS += D:\opencv\build\bin\libopencv_calib3d320.dll
+
+# more correct variant, how set includepath and libs for mingw
+# add system variable: OPENCV_SDK_DIR=D:/opencv/build
+# read http://doc.qt.io/qt-5/qmake-variable-reference.html#libs
+
+#INCLUDEPATH += $$(OPENCV_SDK_DIR)/include
+
+#LIBS += -L$$(OPENCV_SDK_DIR)/x86/mingw/lib \
+#        -lopencv_core320        \
+#        -lopencv_highgui320     \
+#        -lopencv_imgcodecs320   \
+#        -lopencv_imgproc320     \
+#        -lopencv_features2d320  \
+#        -lopencv_calib3d320
+

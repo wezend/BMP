@@ -3,22 +3,34 @@
 #include "controller.h"
 
 view * View;
+
+
 int main(int argc, char *argv[])
 {
+
+
+
     QApplication a(argc, argv);
 
-    //это босс на деревне. он хранит в себе модель и вью
+
+
     Controller  controller;
     View = new view();
     View->controler =  controller;
     View->show();
     View->displayMainMenu();
+
+
+
+
+
 //    так подключается бмп. только тут. всё остальное в модели.
 //    и то потому что я не умею с визуалкой работать
 //    а так надо через проводник и всё твакое(хз)
 //    тоесть пользователь нажал кнопку, открылся проводник(в идеале)
 //    выбрал, нажал "OK". сработала эта штука
-//    controller.model.setBmp("D:\\21.bmp");
+//    controller.model.setBmp("D:\\test9.bmp");
+//    controller.model.clasterisator.setSrc("D:\\snow\\original\\25.jpg");
 
 //    и сразу эта штука. если это не бмп или не то бмп, должна вылетить ошибка.
 //    в идеале, если всё норм, то должно появиться слово "DONE" в кнопке где было написано "OK"
@@ -39,6 +51,8 @@ int main(int argc, char *argv[])
 
     //пороговая фильтрация
 //    controller.model.filterBMP(2, 90);
+
+//    controller.model.clasteriseBMP();
 
 
 

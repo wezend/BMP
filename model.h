@@ -9,6 +9,7 @@
 #include "gradient.h"
 #include "notmaximums.h"
 #include "filter.h"
+#include "clasterisation.h"
 
 #include "qdebug.h"
 
@@ -19,7 +20,10 @@ class Model
 public:
     Model();
     BMP getBmp() const;
+
+//    void setBmp(const char *pFile);
     void setBmp(QString a);
+
     void read();
     void write();
     void makeBlackWhite();
@@ -27,8 +31,10 @@ public:
     void gradBMP();
     void notMaximumsBMP();
     void filterBMP(int min, int max);
+    void clasteriseBMP();
     BMP bmp;
     Read reader;
+    Clasterisation clasterisator;
 private:
 
     Write writer;
@@ -37,6 +43,7 @@ private:
     Gradient gradienter;
     NotMaximums notMaximumer;
     Filter filterer;
+
 
 };
 

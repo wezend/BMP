@@ -32,8 +32,11 @@ typedef struct
     int   rgbBlue=0;
     int   rgbGreen=0;
     int   rgbRed=0;
+
     int   rgbReserved=0;
+
     int   gradVector=0;
+    double prinadl=0;
 } RGBQUAD;
 
 class BMP

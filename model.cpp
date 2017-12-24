@@ -11,6 +11,20 @@ BMP Model::getBmp() const
     return bmp;
 }
 
+
+//void Model::setBmp(const char *pFile)
+//{
+//    //выбор считываемого бмп файла
+//    if(bmp.bmpFileHeadr.bfType==0){
+//        bmp.pFile=fopen(pFile,"rb");
+//    }else {
+//       bmp.pFile=fopen(pFile,"wb");
+//    }
+
+
+//}
+
+
 void Model::setBmp(QString a)
 {
     //выбор считываемого бмп файла
@@ -99,5 +113,13 @@ void Model::filterBMP(int min, int max)
     filterer.filter(min, max);
 
    qDebug() <<"I not filter it!";
+}
+
+void Model::clasteriseBMP()
+{
+
+    clasterisator.clasterisation();
+
+    qDebug() <<"I clasterise it!";
 }
 
